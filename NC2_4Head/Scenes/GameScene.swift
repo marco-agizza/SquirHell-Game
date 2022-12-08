@@ -62,6 +62,7 @@ class GameScene: SKScene {
         }
         lastUpdateTime = currentTime
         moveCamera()
+        movePlayer()
     }
 }
 
@@ -134,6 +135,11 @@ extension GameScene {
                 node.position = CGPoint(x: node.position.x, y: node.position.y + node.frame.height*3)
             }
         }
+    }
+    
+    func movePlayer() {
+        let amountToMove = cameraMovePointPerSecond * CGFloat(dt)
+        player.position = CGPoint(x: player.position.x, y: player.position.y + amountToMove)
     }
 }
 
