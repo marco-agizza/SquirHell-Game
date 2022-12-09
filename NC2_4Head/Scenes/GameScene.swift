@@ -13,15 +13,29 @@ class GameScene: SKScene {
     var background = SKSpriteNode()
     var leftTree = SKSpriteNode()
     var rightTree = SKSpriteNode()
+    // Player
     var player = SKSpriteNode(imageNamed: "Squirrel")
+    var onLeftTree = true
+    var onTree = true
+    var velocityX: CGFloat = 0.0
+    var playerXPosLeft: CGFloat = 0.0
+    var playerXPosRight: CGFloat = 0.0
+    
+    // Obstacles
     var obstacles: [SKSpriteNode] = []
     
+    // Camera
     var cameraNode = SKCameraNode()
     var cameraMovePointPerSecond: CGFloat = 450.0
     var lastUpdateTime: TimeInterval = 0.0
     var dt: TimeInterval = 0.0
     
-    var isTime: TimeInterval = 2.3
+    // Delay for obstacles random generation
+    var isTime: CGFloat = 3.0 {
+        didSet {
+            print(isTime)
+        }
+    }
     
     
     var playableRect: CGRect {
@@ -60,6 +74,19 @@ class GameScene: SKScene {
         //setupNodes()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        if !isPaused {
+            onLeftTree.toggle()
+            onTree.toggle()
+            if !onLeftTree {
+                velocityX = 18
+            } else {
+                velocityX = -18
+            }
+        }
+    }
+    
     override func update(_ currentTime: TimeInterval) {
         if lastUpdateTime > 0 {
             dt = currentTime - lastUpdateTime
@@ -69,14 +96,26 @@ class GameScene: SKScene {
         lastUpdateTime = currentTime
         moveCamera()
         movePlayer()
+        
+        player.position.x += velocityX
+        if onLeftTree {
+            if player.position.x < playerXPosLeft {
+                player.position.x = playerXPosLeft
+                velocityX = 0.0
+                onTree.toggle()
+            }
+        }else{
+            if player.position.x > playerXPosRight {
+                player.position.x = playerXPosRight
+                velocityX = 0.0
+                onTree.toggle()
+            }
+            
+        }
     }
 }
 
 extension GameScene {
-    
-    func setupNodes() {
-        
-    }
     
     func createBackground() {
         for i in 0...2 {
@@ -111,6 +150,9 @@ extension GameScene {
         player.zPosition = 5.0
         player.anchorPoint = CGPoint(x: 0.0, y: 0.5)
         player.position = CGPoint(x: leftTree.frame.width, y: frame.height/3)
+        
+        playerXPosLeft = leftTree.frame.width
+        playerXPosRight = frame.width - rightTree.frame.width - player.frame.width
         addChild(player)
     }
     
@@ -165,45 +207,45 @@ extension GameScene {
         sprite2.zPosition = 5.0
         sprite2.setScale(0.2)
         sprite2.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        let distanceBetweenSprites = Double.random(in: 180...500)
+        let distanceBetweenSprites = Double.random(in: 150...300)
         switch random{
         case 0:
             sprite1.zRotation = (.pi/2)*3
             sprite1.position = CGPoint(x: leftTree.frame.width + sprite1.frame.width/2, y: cameraRect.maxY + sprite1.frame.height/2)
             sprite2.zRotation = .pi/2
-            sprite2.position = CGPoint(x: frame.width - rightTree.frame.width - sprite2.frame.width/2, y: cameraRect.maxY + sprite2.frame.height/2 + 200)
+            sprite2.position = CGPoint(x: frame.width - rightTree.frame.width - sprite2.frame.width/2, y: cameraRect.maxY + sprite2.frame.height/2 + distanceBetweenSprites)
         default:
             sprite1.zRotation = .pi/2
             sprite1.position = CGPoint(x: frame.width - rightTree.frame.width - sprite1.frame.width/2, y: cameraRect.maxY + sprite1.frame.height/2)
             sprite2.zRotation = (.pi/2)*3
-            sprite2.position = CGPoint(x: leftTree.frame.width + sprite2.frame.width/2, y: cameraRect.maxY + sprite2.frame.height/2 + 200)
+            sprite2.position = CGPoint(x: leftTree.frame.width + sprite2.frame.width/2, y: cameraRect.maxY + sprite2.frame.height/2 + distanceBetweenSprites)
         }
         addChild(sprite1)
         addChild(sprite2)
         sprite1.run(.sequence([
-            .wait(forDuration: 2.5),
+            .wait(forDuration: 3),
             .removeFromParent()
         ]))
         sprite2.run(.sequence([
-            .wait(forDuration: 2.5),
+            .wait(forDuration: 3),
             .removeFromParent()
         ]))
     }
     
     func spawnObstacles() {
-        let random = Double(CGFloat.random(in: 0.3...isTime))
         run(.repeatForever(.sequence([
-            .wait(forDuration: random),
+            .wait(forDuration: CGFloat.random(in: 0.8...self.isTime)),
             .run{ [weak self] in
                 self?.setupObstacles()
             }
         ])))
         
         run(.repeatForever(.sequence([
-            .wait(forDuration: 0.32),
+            .wait(forDuration: 6),
             .run{
-                if self.isTime > 0.3 {
-                    self.isTime -= 0.1
+                self.isTime -= 0.5
+                if self.isTime < 0.8 {
+                    self.isTime = 0.8
                 }
             }
         ])))
