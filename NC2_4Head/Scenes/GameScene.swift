@@ -31,12 +31,12 @@ class GameScene: SKScene {
     var dt: TimeInterval = 0.0
     
     // Delay for obstacles random generation
-    var isTime: CGFloat = 3.0 {
+    var maxTime = 2.0 {
         didSet {
-            print(isTime)
+            print(maxTime)
         }
     }
-    
+    var minTime = 0.8
     
     var playableRect: CGRect {
         let ratio: CGFloat = 0.4 // TODO: understand better how it works
@@ -70,7 +70,7 @@ class GameScene: SKScene {
         setupCamera()
         setupObstacles()
         spawnObstacles()
-        print(self.isTime)
+        print(self.maxTime)
         //setupNodes()
     }
     
@@ -112,6 +112,7 @@ class GameScene: SKScene {
             }
             
         }
+        
     }
 }
 
@@ -205,6 +206,11 @@ extension GameScene {
     }
     
     func setupObstacles() {
+        for i in 1...3 {
+            let sprite = SKSpriteNode(imageNamed: "Block-\(i)")
+            sprite.name = "Block"
+            obstacles.append(sprite)
+        }
         for i in 1...2 {
             let sprite = SKSpriteNode(imageNamed: "Obstacle-\(i)")
             sprite.name = "Obstacle"
@@ -237,12 +243,21 @@ extension GameScene {
         sprite1.physicsBody = SKPhysicsBody(rectangleOf: sprite1.size)
         sprite1.physicsBody!.affectedByGravity = false
         sprite1.physicsBody!.isDynamic = false
-        sprite1.physicsBody!.categoryBitMask = PhysicsCategory.Obstacle
+        if sprite1.name == "Obstacle" {
+            sprite1.physicsBody!.categoryBitMask = PhysicsCategory.Obstacle
+        } else {
+            sprite1.physicsBody!.categoryBitMask = PhysicsCategory.Block
+        }
         sprite2.physicsBody = SKPhysicsBody(rectangleOf: sprite1.size)
         sprite2.physicsBody!.affectedByGravity = false
         sprite2.physicsBody!.isDynamic = false
-        sprite2.physicsBody!.categoryBitMask = PhysicsCategory.Obstacle
+        if sprite2.name == "Obstacle" {
+            sprite2.physicsBody!.categoryBitMask = PhysicsCategory.Obstacle
+        } else {
+            sprite2.physicsBody!.categoryBitMask = PhysicsCategory.Block
+        }
         sprite1.physicsBody!.contactTestBitMask = PhysicsCategory.Player
+        sprite2.physicsBody!.contactTestBitMask = PhysicsCategory.Player
         addChild(sprite1)
         addChild(sprite2)
         sprite1.run(.sequence([
@@ -256,19 +271,28 @@ extension GameScene {
     }
     
     func spawnObstacles() {
+        run(
+            .repeat(.sequence([
+                .wait(forDuration: CGFloat.random(in: minTime ... maxTime)),
+                .run{ [weak self] in
+                    self?.setupObstacles()
+                }
+            ]),
+                    count: 10))
+        
         run(.repeatForever(.sequence([
-            .wait(forDuration: CGFloat.random(in: 0.8...self.isTime)),
+            .wait(forDuration: CGFloat.random(in: minTime ... maxTime)),
             .run{ [weak self] in
                 self?.setupObstacles()
             }
         ])))
         
         run(.repeatForever(.sequence([
-            .wait(forDuration: 6),
+            .wait(forDuration: 10.0),
             .run{
-                self.isTime -= 0.5
-                if self.isTime < 0.8 {
-                    self.isTime = 0.8
+                self.maxTime -= 0.5
+                if self.maxTime < self.minTime {
+                    self.maxTime = self.minTime
                 }
             }
         ])))
