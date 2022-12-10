@@ -21,8 +21,19 @@ class GameScene: SKScene {
     var playerXPosLeft: CGFloat = 0.0
     var playerXPosRight: CGFloat = 0.0
     
-    // Obstacles
-    var obstacles: [SKSpriteNode] = []
+    var numScore: Int = 0
+    var gameOver = false
+    var life: Int = 3
+    
+    var lifeNodes: [SKSpriteNode] = []
+    var scoreLabel = SKLabelNode()
+    var nutIcon: SKSpriteNode!
+    
+    
+    // Block & Obstacles
+    var numBlock = 1
+    var numObstacles = 1
+    var obstaclesAndBlocks: [SKSpriteNode] = []
     
     // Camera
     var cameraNode = SKCameraNode()
@@ -67,9 +78,12 @@ class GameScene: SKScene {
         createBackground()
         createTrees()
         createPlayer()
-        setupCamera()
         setupObstacles()
         spawnObstacles()
+        setupLife()
+        setupScore()
+        setupCamera()
+        setupPhysics()
         print(self.maxTime)
         //setupNodes()
     }
@@ -112,7 +126,6 @@ class GameScene: SKScene {
             }
             
         }
-        
     }
 }
 
@@ -157,11 +170,11 @@ extension GameScene {
     func createPlayer() {
         player.name = "Squirrel"
         player.zPosition = 5.0
-        player.anchorPoint = CGPoint(x: 0.0, y: 0.5)
-        player.position = CGPoint(x: leftTree.frame.width, y: frame.height/3)
+        player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        player.position = CGPoint(x: leftTree.frame.width + player.frame.width/2, y: frame.height/3)
         
-        playerXPosLeft = leftTree.frame.width
-        playerXPosRight = frame.width - rightTree.frame.width - player.frame.width
+        playerXPosLeft = leftTree.frame.width + player.frame.width/2
+        playerXPosRight = frame.width - rightTree.frame.width - player.frame.width/2
         
         player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
         player.physicsBody!.affectedByGravity = false
@@ -206,20 +219,20 @@ extension GameScene {
     }
     
     func setupObstacles() {
-        for i in 1...3 {
+        for i in 1 ... numBlock {
             let sprite = SKSpriteNode(imageNamed: "Block-\(i)")
             sprite.name = "Block"
-            obstacles.append(sprite)
+            obstaclesAndBlocks.append(sprite)
         }
-        for i in 1...2 {
+        for i in 1 ... numObstacles {
             let sprite = SKSpriteNode(imageNamed: "Obstacle-\(i)")
             sprite.name = "Obstacle"
-            obstacles.append(sprite)
+            obstaclesAndBlocks.append(sprite)
         }
-        let index1 = Int(arc4random_uniform(UInt32(obstacles.count-1)))
-        let index2 = Int(arc4random_uniform(UInt32(obstacles.count-1)))
-        let sprite1 = obstacles[index1].copy() as! SKSpriteNode
-        let sprite2 = obstacles[index2].copy() as! SKSpriteNode
+        let index1 = Int(arc4random_uniform(UInt32(obstaclesAndBlocks.count-1)))
+        let index2 = Int(arc4random_uniform(UInt32(obstaclesAndBlocks.count-1)))
+        let sprite1 = obstaclesAndBlocks[index1].copy() as! SKSpriteNode
+        let sprite2 = obstaclesAndBlocks[index2].copy() as! SKSpriteNode
         sprite1.zPosition = 5.0
         sprite1.setScale(0.2)
         sprite1.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -297,5 +310,61 @@ extension GameScene {
             }
         ])))
     }
+    
+    func setupPhysics() {
+        physicsWorld.contactDelegate = self
+    }
+    
+    func setupLife() {
+        let node1 = SKSpriteNode(imageNamed: "Life-on")
+        let node2 = SKSpriteNode(imageNamed: "Life-on")
+        let node3 = SKSpriteNode(imageNamed: "Life-on")
+        
+        setupLifePos(node1, i: 1.0, j: 4.0)
+        setupLifePos(node2, i: 2.0, j: 12.0)
+        setupLifePos(node3, i: 3.0, j: 20.0)
+        
+        lifeNodes.append(node1)
+        lifeNodes.append(node2)
+        lifeNodes.append(node3)
+    }
+    
+    func setupLifePos(_ node: SKSpriteNode, i: CGFloat, j: CGFloat) {
+        let width = playableRect.width
+        let height = playableRect.height
+        
+        node.setScale(0.2)
+        node.zPosition = 50.0
+        node.position = CGPoint(x: -width/2.0 + node.frame.width * i + j - 15.0,
+                                y: height/3.0 + node.frame.height)
+        cameraNode.addChild(node)
+    }
+    
+    func setupScore() {
+        let width = playableRect.width
+        let height = playableRect.height
+        
+        nutIcon = SKSpriteNode(imageNamed: "Nut-0")
+        nutIcon.setScale(0.7)
+        nutIcon.zPosition = 50.0
+        nutIcon.position = CGPoint(x: -width/2.0 + nutIcon.frame.width * 8,
+                                   y: height/3.0 + nutIcon.frame.height)
+        cameraNode.addChild(nutIcon)
+    }
 }
 
+//MARK: - SKPhysicsContactDelegate
+
+extension GameScene: SKPhysicsContactDelegate {
+    func didBegin(_ contact: SKPhysicsContact) {
+        let other = contact.bodyA.categoryBitMask == PhysicsCategory.Player ? contact.bodyB : contact.bodyA
+        switch other.categoryBitMask {
+        case PhysicsCategory.Block:
+            print("Block")
+            cameraMovePointPerSecond += 100
+        case PhysicsCategory.Obstacle:
+            print("Obstacle")
+        default: break
+        }
+    }
+}
