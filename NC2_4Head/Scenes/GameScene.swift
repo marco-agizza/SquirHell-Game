@@ -135,12 +135,20 @@ extension GameScene {
             leftTree.anchorPoint = .zero
             leftTree.zPosition = 1.0
             leftTree.position = CGPoint(x: 0.0, y: CGFloat(i)*leftTree.frame.height)
-            addChild(leftTree)
+            leftTree.physicsBody = SKPhysicsBody(rectangleOf: leftTree.size)
+            leftTree.physicsBody!.isDynamic = false
+            leftTree.physicsBody!.affectedByGravity = false
+            leftTree.physicsBody!.categoryBitMask = PhysicsCategory.Tree
             rightTree = SKSpriteNode(imageNamed: "RightTree")
             rightTree.name = "Tree"
             rightTree.anchorPoint = CGPoint(x: 1, y:  0)
             rightTree.zPosition = 1.0
             rightTree.position = CGPoint(x: frame.width, y: CGFloat(i)*rightTree.frame.height)
+            rightTree.physicsBody = SKPhysicsBody(rectangleOf: rightTree.size)
+            rightTree.physicsBody!.isDynamic = false
+            rightTree.physicsBody!.affectedByGravity = false
+            rightTree.physicsBody!.categoryBitMask = PhysicsCategory.Tree
+            addChild(leftTree)
             addChild(rightTree)
         }
     }
@@ -153,6 +161,12 @@ extension GameScene {
         
         playerXPosLeft = leftTree.frame.width
         playerXPosRight = frame.width - rightTree.frame.width - player.frame.width
+        
+        player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
+        player.physicsBody!.affectedByGravity = false
+        player.physicsBody!.restitution = 0.0
+        player.physicsBody!.categoryBitMask = PhysicsCategory.Player
+        player.physicsBody!.contactTestBitMask = PhysicsCategory.Obstacle
         addChild(player)
     }
     
@@ -220,6 +234,15 @@ extension GameScene {
             sprite2.zRotation = (.pi/2)*3
             sprite2.position = CGPoint(x: leftTree.frame.width + sprite2.frame.width/2, y: cameraRect.maxY + sprite2.frame.height/2 + distanceBetweenSprites)
         }
+        sprite1.physicsBody = SKPhysicsBody(rectangleOf: sprite1.size)
+        sprite1.physicsBody!.affectedByGravity = false
+        sprite1.physicsBody!.isDynamic = false
+        sprite1.physicsBody!.categoryBitMask = PhysicsCategory.Obstacle
+        sprite2.physicsBody = SKPhysicsBody(rectangleOf: sprite1.size)
+        sprite2.physicsBody!.affectedByGravity = false
+        sprite2.physicsBody!.isDynamic = false
+        sprite2.physicsBody!.categoryBitMask = PhysicsCategory.Obstacle
+        sprite1.physicsBody!.contactTestBitMask = PhysicsCategory.Player
         addChild(sprite1)
         addChild(sprite2)
         sprite1.run(.sequence([

@@ -15,6 +15,7 @@
 		523A37DB2940AAC600B60D5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523A37D92940AAC600B60D5B /* Main.storyboard */; };
 		523A37DD2940AAC800B60D5B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 523A37DC2940AAC800B60D5B /* Assets.xcassets */; };
 		523A37E02940AAC800B60D5B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523A37DE2940AAC800B60D5B /* LaunchScreen.storyboard */; };
+		52ED4A9029448C7D00D06407 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ED4A8F29448C7D00D06407 /* Types.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		523A37DA2940AAC600B60D5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		523A37DC2940AAC800B60D5B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		523A37DF2940AAC800B60D5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		52ED4A8F29448C7D00D06407 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				523A37CF2940AAC600B60D5B /* AppDelegate.swift */,
 				523A37D12940AAC600B60D5B /* GameScene.sks */,
 				523A37D32940AAC600B60D5B /* Actions.sks */,
+				52ED4A8E29448C3A00D06407 /* Types */,
 				523A37E82940AD6300B60D5B /* Scenes */,
 				523A37E72940AD5200B60D5B /* Controllers */,
 				523A37E62940ABC900B60D5B /* Resources */,
@@ -93,6 +96,14 @@
 				523A37D52940AAC600B60D5B /* GameScene.swift */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		52ED4A8E29448C3A00D06407 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				52ED4A8F29448C7D00D06407 /* Types.swift */,
+			);
+			path = Types;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,6 +182,7 @@
 				523A37D62940AAC600B60D5B /* GameScene.swift in Sources */,
 				523A37D82940AAC600B60D5B /* GameViewController.swift in Sources */,
 				523A37D02940AAC600B60D5B /* AppDelegate.swift in Sources */,
+				52ED4A9029448C7D00D06407 /* Types.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
