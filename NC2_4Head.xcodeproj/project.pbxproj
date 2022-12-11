@@ -68,11 +68,11 @@
 				523A37CF2940AAC600B60D5B /* AppDelegate.swift */,
 				523A37D12940AAC600B60D5B /* GameScene.sks */,
 				523A37D32940AAC600B60D5B /* Actions.sks */,
-				52DDFCF72946445B00980043 /* AtariST8x16SystemFont.ttf */,
 				52ED4A8E29448C3A00D06407 /* Types */,
 				523A37E82940AD6300B60D5B /* Scenes */,
 				523A37E72940AD5200B60D5B /* Controllers */,
 				523A37E62940ABC900B60D5B /* Resources */,
+				52DDFCFB2946464500980043 /* Fonts */,
 			);
 			path = NC2_4Head;
 			sourceTree = "<group>";
@@ -101,6 +101,14 @@
 				523A37D52940AAC600B60D5B /* GameScene.swift */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		52DDFCFB2946464500980043 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				52DDFCF72946445B00980043 /* AtariST8x16SystemFont.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		52ED4A8E29448C3A00D06407 /* Types */ = {
