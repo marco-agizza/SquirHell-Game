@@ -13,6 +13,7 @@ class GameScene: SKScene {
     var background = SKSpriteNode()
     var leftTree = SKSpriteNode()
     var rightTree = SKSpriteNode()
+    
     // Player
     var player = SKSpriteNode(imageNamed: "Squirrel")
     var onLeftTree = true
@@ -21,14 +22,11 @@ class GameScene: SKScene {
     var playerXPosLeft: CGFloat = 0.0
     var playerXPosRight: CGFloat = 0.0
     
+    // Play
     var numScore: Int = 0
     var gameOver = false
-    var life: Int = 3
-    
-    var lifeNodes: [SKSpriteNode] = []
-    var scoreLabel = SKLabelNode()
     var nutIcon: SKSpriteNode!
-    
+    var scoreLabel = SKLabelNode(fontNamed: "Atari ST 8x16 System Font")
     
     // Block & Obstacles
     var numBlock = 1
@@ -80,7 +78,6 @@ class GameScene: SKScene {
         createPlayer()
         setupObstacles()
         spawnObstacles()
-        setupLife()
         setupScore()
         setupCamera()
         setupPhysics()
@@ -315,41 +312,32 @@ extension GameScene {
         physicsWorld.contactDelegate = self
     }
     
-    func setupLife() {
-        let node1 = SKSpriteNode(imageNamed: "Life-on")
-        let node2 = SKSpriteNode(imageNamed: "Life-on")
-        let node3 = SKSpriteNode(imageNamed: "Life-on")
+    func setupScore() {
+        // Nut icon
+        nutIcon = SKSpriteNode(imageNamed: "Nut-0")
         
-        setupLifePos(node1, i: 1.0, j: 4.0)
-        setupLifePos(node2, i: 2.0, j: 12.0)
-        setupLifePos(node3, i: 3.0, j: 20.0)
+        // Score label
+        scoreLabel.text = "\(numScore)"
+        scoreLabel.fontSize = 60
+        scoreLabel.horizontalAlignmentMode = .left
+        scoreLabel.verticalAlignmentMode = .top
+        scoreLabel.zPosition = 50.0
         
-        lifeNodes.append(node1)
-        lifeNodes.append(node2)
-        lifeNodes.append(node3)
+        setupScorePos(nutIcon, i: 2.0, j: 4.0)
+        scoreLabel.position = CGPoint(x:  nutIcon.position.x + nutIcon.frame.width,
+                                      y: nutIcon.position.y + nutIcon.frame.height-8.0)
+        cameraNode.addChild(scoreLabel)
     }
     
-    func setupLifePos(_ node: SKSpriteNode, i: CGFloat, j: CGFloat) {
+    func setupScorePos(_ node: SKSpriteNode, i: CGFloat, j: CGFloat) {
         let width = playableRect.width
         let height = playableRect.height
         
-        node.setScale(0.2)
+        node.setScale(0.6)
         node.zPosition = 50.0
         node.position = CGPoint(x: -width/2.0 + node.frame.width * i + j - 15.0,
                                 y: height/3.0 + node.frame.height)
         cameraNode.addChild(node)
-    }
-    
-    func setupScore() {
-        let width = playableRect.width
-        let height = playableRect.height
-        
-        nutIcon = SKSpriteNode(imageNamed: "Nut-0")
-        nutIcon.setScale(0.7)
-        nutIcon.zPosition = 50.0
-        nutIcon.position = CGPoint(x: -width/2.0 + nutIcon.frame.width * 8,
-                                   y: height/3.0 + nutIcon.frame.height)
-        cameraNode.addChild(nutIcon)
     }
 }
 

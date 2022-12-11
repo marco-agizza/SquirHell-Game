@@ -15,6 +15,7 @@
 		523A37DB2940AAC600B60D5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523A37D92940AAC600B60D5B /* Main.storyboard */; };
 		523A37DD2940AAC800B60D5B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 523A37DC2940AAC800B60D5B /* Assets.xcassets */; };
 		523A37E02940AAC800B60D5B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523A37DE2940AAC800B60D5B /* LaunchScreen.storyboard */; };
+		52DDFCF8294644E100980043 /* AtariST8x16SystemFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52DDFCF72946445B00980043 /* AtariST8x16SystemFont.ttf */; };
 		52ED4A9029448C7D00D06407 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ED4A8F29448C7D00D06407 /* Types.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +29,8 @@
 		523A37DA2940AAC600B60D5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		523A37DC2940AAC800B60D5B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		523A37DF2940AAC800B60D5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		52DDFCF72946445B00980043 /* AtariST8x16SystemFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AtariST8x16SystemFont.ttf; sourceTree = "<group>"; };
+		52DDFCF92946453900980043 /* NC2-4Head-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "NC2-4Head-Info.plist"; sourceTree = SOURCE_ROOT; };
 		52ED4A8F29448C7D00D06407 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,9 +64,11 @@
 		523A37CE2940AAC600B60D5B /* NC2_4Head */ = {
 			isa = PBXGroup;
 			children = (
+				52DDFCF92946453900980043 /* NC2-4Head-Info.plist */,
 				523A37CF2940AAC600B60D5B /* AppDelegate.swift */,
 				523A37D12940AAC600B60D5B /* GameScene.sks */,
 				523A37D32940AAC600B60D5B /* Actions.sks */,
+				52DDFCF72946445B00980043 /* AtariST8x16SystemFont.ttf */,
 				52ED4A8E29448C3A00D06407 /* Types */,
 				523A37E82940AD6300B60D5B /* Scenes */,
 				523A37E72940AD5200B60D5B /* Controllers */,
@@ -168,6 +173,7 @@
 				523A37D22940AAC600B60D5B /* GameScene.sks in Resources */,
 				523A37DD2940AAC800B60D5B /* Assets.xcassets in Resources */,
 				523A37E02940AAC800B60D5B /* LaunchScreen.storyboard in Resources */,
+				52DDFCF8294644E100980043 /* AtariST8x16SystemFont.ttf in Resources */,
 				523A37D42940AAC600B60D5B /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,6 +337,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F639597UZK;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "NC2-4Head-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -359,6 +366,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F639597UZK;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "NC2-4Head-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
