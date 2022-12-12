@@ -13,9 +13,10 @@ class GameScene: SKScene {
     var background = SKSpriteNode()
     var leftTree = SKSpriteNode()
     var rightTree = SKSpriteNode()
+    var scale: CGFloat = 2.0
     
     // Player
-    var player = SKSpriteNode(imageNamed: "Squirrel")
+    var player = SKSpriteNode(imageNamed: "SquirrelLeft-0")
     var playerReference = SKSpriteNode()
     var onLeftTree = true
     var onTree = true
@@ -23,8 +24,15 @@ class GameScene: SKScene {
     var playerXPosLeft: CGFloat = 0.0
     var playerXPosRight: CGFloat = 0.0
     var playerYPos: CGFloat = 0.0
+    var squirrelStepFrequency = 0.083
     
     // Play
+    var gameIsStarted = false {
+        didSet {
+            setupObstacles()
+            spawnObstacles()
+        }
+    }
     var numScore: Int = 0
     var gameOver = false
     var nutIcon: SKSpriteNode!
@@ -85,8 +93,6 @@ class GameScene: SKScene {
         createBackground()
         createTrees()
         createPlayer()
-        setupObstacles()
-        spawnObstacles()
         setupScore()
         setupPause()
         setupCamera()
@@ -130,12 +136,17 @@ class GameScene: SKScene {
         } else {
             dt = 0
         }
+        numScore = Int(cameraMovePointPerSecond/100.0)
         lastUpdateTime = currentTime
         moveCamera()
         movePlayer()
-//        updateScore()
         
         player.position.x += velocityX
+        if player.position.x < frame.width/2 {
+            player.xScale = scale
+        } else if player.position.x > frame.width/2 {
+            player.xScale = -scale
+        }
         if onLeftTree {
             if player.position.x < playerXPosLeft {
                 player.position.x = playerXPosLeft
@@ -153,8 +164,15 @@ class GameScene: SKScene {
         print("the position is \(player.position.y) and should be \(playerReference.position.y)")
         // TODO: i've to compare the y coordinate with the y cordinate of an hidden obj locked on the screen
         if player.position.y < playerReference.position.y {
-            player.position.y += 0.3
+            if gameIsStarted {
+                player.position.y += 0.3
+            } else {
+                player.position.y += 2.0
+            }
             if player.position.y > playerReference.position.y {
+                if !gameIsStarted {
+                    gameIsStarted.toggle()
+                }
                 player.position.y = playerReference.position.y
             }
         }
@@ -183,6 +201,7 @@ extension GameScene {
     func createTrees() {
         for i in 0...2 {
             leftTree = SKSpriteNode(imageNamed: "LeftTree")
+            leftTree.setScale(scale)
             leftTree.name = "Tree"
             leftTree.anchorPoint = .zero
             leftTree.zPosition = 1.0
@@ -191,9 +210,11 @@ extension GameScene {
             leftTree.physicsBody!.isDynamic = false
             leftTree.physicsBody!.affectedByGravity = false
             leftTree.physicsBody!.categoryBitMask = PhysicsCategory.Tree
-            rightTree = SKSpriteNode(imageNamed: "RightTree")
+            rightTree = SKSpriteNode(imageNamed: "LeftTree")
+            rightTree.setScale(scale)
+            rightTree.xScale = -scale
             rightTree.name = "Tree"
-            rightTree.anchorPoint = CGPoint(x: 1, y:  0)
+            rightTree.anchorPoint = .zero
             rightTree.zPosition = 1.0
             rightTree.position = CGPoint(x: frame.width, y: CGFloat(i)*rightTree.frame.height)
             rightTree.physicsBody = SKPhysicsBody(rectangleOf: rightTree.size)
@@ -208,8 +229,9 @@ extension GameScene {
     func createPlayer() {
         player.name = "Squirrel"
         player.zPosition = 5.0
+        player.setScale(scale)
         player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        player.position = CGPoint(x: leftTree.frame.width + player.frame.width/2, y: frame.height/3)
+        player.position = CGPoint(x: leftTree.frame.width + player.frame.width/2, y: 0.0)
         
         playerXPosLeft = leftTree.frame.width + player.frame.width/2
         playerXPosRight = frame.width - rightTree.frame.width - player.frame.width/2
@@ -220,10 +242,16 @@ extension GameScene {
         player.physicsBody!.restitution = 0.0
         player.physicsBody!.categoryBitMask = PhysicsCategory.Player
         player.physicsBody!.contactTestBitMask = PhysicsCategory.Obstacle
+        player.physicsBody?.allowsRotation = false
         
         playerReference.zPosition = -5.0
-        playerReference.position = CGPoint(x: leftTree.frame.width + player.frame.width/2, y: frame.height/3)
+        playerReference.position = CGPoint(x: leftTree.frame.width + player.frame.width/2, y: frame.height/4)
         
+        var textures: [SKTexture] = []
+        for i in 0...1 {
+            textures.append (SKTexture (imageNamed: "SquirrelLeft-\(i)"))
+        }
+        player.run(.repeatForever(.animate(with: textures, timePerFrame: squirrelStepFrequency)))
         addChild(player)
     }
     
@@ -262,10 +290,6 @@ extension GameScene {
         playerReference.position = CGPoint(x: playerReference.position.x, y: playerReference.position.y + amountToMove)
         
     }
-    
-//    func updateScore() {
-//        numScore += 1
-//    }
     
     func setupObstacles() {
         for i in 1 ... numBlock {
@@ -393,6 +417,7 @@ extension GameScene {
                                      y: playableRect.height/3.0 + nutIcon.frame.height-8.0)
         cameraNode.addChild (pauseNode)
     }
+    
     func createPanel() {
         cameraNode.addChild(containerNode)
         let panel = SKSpriteNode (imageNamed: "panel")
