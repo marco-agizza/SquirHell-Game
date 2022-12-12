@@ -25,7 +25,7 @@ class GameScene: SKScene {
     var playerYPos: CGFloat = 0.0
     
     // Play
-    var numScore: Int = 0
+    var numScore: Double = 0
     var gameOver = false
     var nutIcon: SKSpriteNode!
     var scoreLabel = SKLabelNode(fontNamed: "Atari ST 8x16 System Font")
@@ -133,7 +133,7 @@ class GameScene: SKScene {
         lastUpdateTime = currentTime
         moveCamera()
         movePlayer()
-//        updateScore()
+        updateScore()
         
         player.position.x += velocityX
         if onLeftTree {
@@ -263,9 +263,13 @@ extension GameScene {
         
     }
     
-//    func updateScore() {
-//        numScore += 1
-//    }
+    // Increase the score with time
+    func updateScore() {
+        let scoreIncrement = 0.01
+        
+        numScore += scoreIncrement
+        scoreLabel.text = "\(Int(numScore.rounded()) * 10)"
+    }
     
     func setupObstacles() {
         for i in 1 ... numBlock {
