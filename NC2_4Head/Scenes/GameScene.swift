@@ -16,17 +16,22 @@ class GameScene: SKScene {
     
     // Player
     var player = SKSpriteNode(imageNamed: "Squirrel")
+    var playerReference = SKSpriteNode()
     var onLeftTree = true
     var onTree = true
     var velocityX: CGFloat = 0.0
     var playerXPosLeft: CGFloat = 0.0
     var playerXPosRight: CGFloat = 0.0
+    var playerYPos: CGFloat = 0.0
     
     // Play
     var numScore: Int = 0
     var gameOver = false
     var nutIcon: SKSpriteNode!
     var scoreLabel = SKLabelNode(fontNamed: "Atari ST 8x16 System Font")
+    
+    var pauseNode: SKSpriteNode!
+    var containerNode = SKNode()
     
     // Block & Obstacles
     var numBlock = 1
@@ -35,7 +40,11 @@ class GameScene: SKScene {
     
     // Camera
     var cameraNode = SKCameraNode()
-    var cameraMovePointPerSecond: CGFloat = 450.0
+    var cameraMovePointPerSecond: CGFloat = 450.0 {
+        didSet {
+            print("camera speeds up")
+        }
+    }
     var lastUpdateTime: TimeInterval = 0.0
     var dt: TimeInterval = 0.0
     
@@ -50,11 +59,11 @@ class GameScene: SKScene {
     var playableRect: CGRect {
         let ratio: CGFloat = 0.4 // TODO: understand better how it works
         /*switch UIScreen.main.nativeBounds.height {
-        case 2688, 1792, 2436:
-            ratio = 2.16
-        default:
-            ratio = 16/9
-        }*/
+         case 2688, 1792, 2436:
+         ratio = 2.16
+         default:
+         ratio = 16/9
+         }*/
         let playableHeight = size.width / ratio
         let playableMargin = (size.height - playableHeight) / 2.0
         
@@ -69,7 +78,7 @@ class GameScene: SKScene {
         
         return CGRect(x: x, y: y, width: width, height: height)
     }
-        
+    
     // MARK: System
     
     override func didMove(to view: SKView) {
@@ -79,6 +88,7 @@ class GameScene: SKScene {
         setupObstacles()
         spawnObstacles()
         setupScore()
+        setupPause()
         setupCamera()
         setupPhysics()
         print(self.maxTime)
@@ -87,15 +97,31 @@ class GameScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        if !isPaused {
-            onLeftTree.toggle()
-            onTree.toggle()
-            if !onLeftTree {
-                velocityX = 18
-            } else {
-                velocityX = -18
+        guard let touch = touches.first else { return }
+        let node = atPoint(touch.location (in: self))
+        if node.name == "pause" {
+            if isPaused { return }
+            createPanel()
+            lastUpdateTime = 0.0
+            dt = 0.0
+            isPaused = true
+        } else if node.name == "resume" {
+            containerNode.removeFromParent()
+            isPaused = false
+        } else if node.name == "quit" {
+            //presentScene(MainMenu(size: size))
+        } else {
+            if !isPaused {
+                onLeftTree.toggle()
+                onTree.toggle()
+                if !onLeftTree {
+                    velocityX = 18
+                } else {
+                    velocityX = -18
+                }
             }
         }
+        
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -122,6 +148,20 @@ class GameScene: SKScene {
                 onTree.toggle()
             }
             
+        }
+        print("the position is \(player.position.y) and should be \(playerReference.position.y)")
+        // TODO: i've to compare the y coordinate with the y cordinate of an hidden obj locked on the screen
+        if player.position.y < playerReference.position.y {
+            player.position.y += 0.3
+            if player.position.y > playerReference.position.y {
+                player.position.y = playerReference.position.y
+            }
+        }
+        
+        if gameOver {
+            let scene = GameOver(size: size)
+            scene.scaleMode = scaleMode
+            view!.presentScene(scene, transition: .doorsCloseVertical(withDuration: 0.8))
         }
     }
 }
@@ -172,12 +212,17 @@ extension GameScene {
         
         playerXPosLeft = leftTree.frame.width + player.frame.width/2
         playerXPosRight = frame.width - rightTree.frame.width - player.frame.width/2
+        playerYPos = frame.height/3
         
         player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
         player.physicsBody!.affectedByGravity = false
         player.physicsBody!.restitution = 0.0
         player.physicsBody!.categoryBitMask = PhysicsCategory.Player
         player.physicsBody!.contactTestBitMask = PhysicsCategory.Obstacle
+        
+        playerReference.zPosition = -5.0
+        playerReference.position = CGPoint(x: leftTree.frame.width + player.frame.width/2, y: frame.height/3)
+        
         addChild(player)
     }
     
@@ -213,6 +258,8 @@ extension GameScene {
     func movePlayer() {
         let amountToMove = cameraMovePointPerSecond * CGFloat(dt)
         player.position = CGPoint(x: player.position.x, y: player.position.y + amountToMove)
+        playerReference.position = CGPoint(x: playerReference.position.x, y: playerReference.position.y + amountToMove)
+        
     }
     
     func setupObstacles() {
@@ -281,15 +328,6 @@ extension GameScene {
     }
     
     func spawnObstacles() {
-        run(
-            .repeat(.sequence([
-                .wait(forDuration: CGFloat.random(in: minTime ... maxTime)),
-                .run{ [weak self] in
-                    self?.setupObstacles()
-                }
-            ]),
-                    count: 10))
-        
         run(.repeatForever(.sequence([
             .wait(forDuration: CGFloat.random(in: minTime ... maxTime)),
             .run{ [weak self] in
@@ -300,6 +338,7 @@ extension GameScene {
         run(.repeatForever(.sequence([
             .wait(forDuration: 10.0),
             .run{
+                self.cameraMovePointPerSecond += 100
                 self.maxTime -= 0.5
                 if self.maxTime < self.minTime {
                     self.maxTime = self.minTime
@@ -339,6 +378,35 @@ extension GameScene {
                                 y: height/3.0 + node.frame.height)
         cameraNode.addChild(node)
     }
+    
+    func setupPause () {
+        pauseNode = SKSpriteNode (imageNamed: "pause")
+        pauseNode.setScale (0.25)
+        pauseNode.zPosition = 50.0
+        pauseNode.name = "pause"
+        pauseNode.position = CGPoint(x: playableRect.width/2.0 - pauseNode.frame.width/2.0 - 30.0,
+                                     y: playableRect.height/3.0 + nutIcon.frame.height-8.0)
+        cameraNode.addChild (pauseNode)
+    }
+    func createPanel() {
+        cameraNode.addChild(containerNode)
+        let panel = SKSpriteNode (imageNamed: "panel")
+        panel.zPosition = 60.0
+        panel.position = .zero
+        containerNode.addChild(panel)
+        let resume = SKSpriteNode (imageNamed: "resume")
+        resume.zPosition = 70.0
+        resume.name = "resume"
+        resume.setScale (0.4)
+        resume.position = CGPoint (x: -panel.frame.width/2.0 + resume.frame.width*1.5, y: 0.0)
+        panel.addChild(resume)
+        let quit = SKSpriteNode (imageNamed: "back")
+        quit.zPosition = 70.0
+        quit.name = "quit"
+        quit.setScale(0.4)
+        quit.position = CGPoint(x: panel.frame.width/2.0 - quit.frame.width*1.5, y: 0.0)
+        panel.addChild(quit)
+    }
 }
 
 //MARK: - SKPhysicsContactDelegate
@@ -349,9 +417,9 @@ extension GameScene: SKPhysicsContactDelegate {
         switch other.categoryBitMask {
         case PhysicsCategory.Block:
             print("Block")
-            cameraMovePointPerSecond += 100
         case PhysicsCategory.Obstacle:
-            print("Obstacle")
+            gameOver = true
+            print("Game Over")
         default: break
         }
     }
