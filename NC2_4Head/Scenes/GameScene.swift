@@ -133,6 +133,7 @@ class GameScene: SKScene {
         lastUpdateTime = currentTime
         moveCamera()
         movePlayer()
+//        updateScore()
         
         player.position.x += velocityX
         if onLeftTree {
@@ -261,6 +262,10 @@ extension GameScene {
         playerReference.position = CGPoint(x: playerReference.position.x, y: playerReference.position.y + amountToMove)
         
     }
+    
+//    func updateScore() {
+//        numScore += 1
+//    }
     
     func setupObstacles() {
         for i in 1 ... numBlock {
