@@ -34,7 +34,6 @@ class GameScene: SKScene {
             spawnObstacles()
         }
     }
-    var numScore: Int = 0
     var numScore: Double = 0
     var gameOver = false
     var nutIcon: SKSpriteNode!
