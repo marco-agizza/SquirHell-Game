@@ -18,6 +18,7 @@ class GameScene: SKScene {
     // Player
     var player = SKSpriteNode(imageNamed: "SquirrelLeft-0")
     var playerReference = SKSpriteNode()
+    var playerGameOverReference = SKSpriteNode()
     var onLeftTree = true
     var onTree = true
     var velocityX: CGFloat = 0.0
@@ -177,6 +178,10 @@ class GameScene: SKScene {
             }
         }
         
+        if player.position.y < playerGameOverReference.position.y {
+            gameOver = true
+        }
+        
         if gameOver {
             let scene = GameOver(size: size)
             scene.scaleMode = scaleMode
@@ -246,6 +251,8 @@ extension GameScene {
         
         playerReference.zPosition = -5.0
         playerReference.position = CGPoint(x: leftTree.frame.width + player.frame.width/2, y: frame.height/4)
+        playerGameOverReference.zPosition = -5.0
+        playerGameOverReference.position = CGPoint(x: leftTree.frame.width + player.frame.width/2, y: 0)
         
         var textures: [SKTexture] = []
         for i in 0...1 {
@@ -288,6 +295,7 @@ extension GameScene {
         let amountToMove = cameraMovePointPerSecond * CGFloat(dt)
         player.position = CGPoint(x: player.position.x, y: player.position.y + amountToMove)
         playerReference.position = CGPoint(x: playerReference.position.x, y: playerReference.position.y + amountToMove)
+        playerGameOverReference.position = CGPoint(x: playerGameOverReference.position.x, y: playerGameOverReference.position.y + amountToMove)
         
     }
     
