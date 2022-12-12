@@ -137,7 +137,7 @@ class GameScene: SKScene {
         } else {
             dt = 0
         }
-        numScore = Int(cameraMovePointPerSecond/100.0)
+//        numScore = cameraMovePointPerSecond/100
         lastUpdateTime = currentTime
         moveCamera()
         movePlayer()
