@@ -256,7 +256,7 @@ extension GameScene {
         playerGameOverReference.position = CGPoint(x: leftTree.frame.width + player.frame.width/2, y: 0)
         
         var textures: [SKTexture] = []
-        for i in 0...1 {
+        for i in 0...3 {
             textures.append (SKTexture (imageNamed: "SquirrelLeft-\(i)"))
         }
         player.run(.repeatForever(.animate(with: textures, timePerFrame: squirrelStepFrequency)))
@@ -323,12 +323,20 @@ extension GameScene {
         let index2 = Int(arc4random_uniform(UInt32(obstaclesAndBlocks.count-1)))
         let sprite1 = obstaclesAndBlocks[index1].copy() as! SKSpriteNode
         let sprite2 = obstaclesAndBlocks[index2].copy() as! SKSpriteNode
+        if sprite1.name == "Obstacle"{
+            sprite1.setScale(scale)
+        }else{
+            sprite1.setScale(0.2)
+        }
+        if sprite2.name == "Obstacle"{
+            sprite2.setScale(scale)
+        }else{
+            sprite2.setScale(0.2)
+        }
         sprite1.zPosition = 5.0
-        sprite1.setScale(0.2)
         sprite1.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         let random = Int.random(in: 0...1)
         sprite2.zPosition = 5.0
-        sprite2.setScale(0.2)
         sprite2.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         let distanceBetweenSprites = Double.random(in: 150...300)
         switch random{

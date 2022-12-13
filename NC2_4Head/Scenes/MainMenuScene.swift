@@ -95,7 +95,7 @@ extension MainMenuScene {
             leftTree.physicsBody!.isDynamic = false
             leftTree.physicsBody!.affectedByGravity = false
             leftTree.physicsBody!.categoryBitMask = PhysicsCategory.Tree
-            rightTree = SKSpriteNode(imageNamed: "RightTree")
+            rightTree = SKSpriteNode(imageNamed: "LeftTree")
             rightTree.name = "Tree"
             rightTree.anchorPoint = CGPoint(x: 1, y:  0)
             rightTree.zPosition = 1.0
