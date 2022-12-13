@@ -15,8 +15,7 @@ class MainMenuScene: SKScene {
     var rightTree = SKSpriteNode()
     
     override func didMove(to view: SKView) {
-        let soundtrack = SKAction.playSoundFileNamed ("MenuSong", waitForCompletion: false)
-        run(SKAction.sequence([soundtrack]))
+        SKTAudio.sharedInstance().playBackgroundMusic("MenuSong.mp3")
         createBackground()
         createTrees()
         setupNodes()
@@ -29,6 +28,7 @@ class MainMenuScene: SKScene {
         let node = atPoint(touch.location(in: self))
         
         if node.name == "play" {
+            SKTAudio.sharedInstance().pauseBackgroundMusic()
             let scene = GameScene(size: CGSize(width: frame.width, height: frame.height))
             scene.scaleMode = scaleMode
             view!.presentScene(scene, transition: .doorsOpenVertical(withDuration: 0.3))
@@ -39,7 +39,6 @@ class MainMenuScene: SKScene {
     }
     
     func setupNodes() {
-        
         // TODO: font doesn't work
         let gameTitle = SKLabelNode(fontNamed: "Atari ST 8x16 System Font")
         gameTitle.text = "SquirHell"
@@ -63,8 +62,6 @@ class MainMenuScene: SKScene {
         higscoreButton.zPosition = 10.0
         higscoreButton.position = CGPoint(x: size.width/2.0, y: size.height/2.0 + 65)
         addChild(higscoreButton)
-        
-        
     }
     
     func addNodes() {

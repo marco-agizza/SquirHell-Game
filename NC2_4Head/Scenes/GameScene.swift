@@ -133,7 +133,6 @@ class GameScene: SKScene {
         }
         
     }
-    
     override func update(_ currentTime: TimeInterval) {
         if lastUpdateTime > 0 {
             dt = currentTime - lastUpdateTime
