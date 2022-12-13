@@ -15,6 +15,8 @@ class MainMenuScene: SKScene {
     var rightTree = SKSpriteNode()
     
     override func didMove(to view: SKView) {
+        let soundtrack = SKAction.playSoundFileNamed ("MenuSong", waitForCompletion: false)
+        run(SKAction.sequence([soundtrack]))
         createBackground()
         createTrees()
         setupNodes()

@@ -7,12 +7,14 @@
 
 import SpriteKit
 import GameplayKit
+import AudioToolbox
 
 class GameScene: SKScene {
     // MARK: Properties
     var background = SKSpriteNode()
     var leftTree = SKSpriteNode()
     var rightTree = SKSpriteNode()
+    var fire = SKSpriteNode()
     var scale: CGFloat = 2.0
     
     // Player
@@ -93,6 +95,7 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         createBackground()
         createTrees()
+        createFire()
         createPlayer()
         setupScore()
         setupPause()
@@ -230,6 +233,20 @@ extension GameScene {
             addChild(leftTree)
             addChild(rightTree)
         }
+    }
+    
+    func createFire() {
+        fire = SKSpriteNode(imageNamed: "Fire-1")
+        fire.setScale(scale)
+        fire.name = "Fire"
+        fire.zPosition = 50.0
+        fire.position = CGPoint(x: frame.width/2, y: 20)
+        var textures: [SKTexture] = []
+        for i in 0...1 {
+            textures.append(SKTexture (imageNamed: "Fire-\(i)"))
+        }
+        fire.run(.repeatForever(.animate(with: textures, timePerFrame: squirrelStepFrequency)))
+        addChild(fire)
     }
     
     func createPlayer() {
