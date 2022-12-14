@@ -25,7 +25,7 @@
 
 /* Begin PBXFileReference section */
 		342D1E9B2947454700042838 /* MainMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
-		523A37CC2940AAC600B60D5B /* NC2_4Head.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NC2_4Head.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		523A37CC2940AAC600B60D5B /* SquirHell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SquirHell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		523A37CF2940AAC600B60D5B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		523A37D12940AAC600B60D5B /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		523A37D32940AAC600B60D5B /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -64,7 +64,7 @@
 		523A37CD2940AAC600B60D5B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				523A37CC2940AAC600B60D5B /* NC2_4Head.app */,
+				523A37CC2940AAC600B60D5B /* SquirHell.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -142,9 +142,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		523A37CB2940AAC600B60D5B /* NC2_4Head */ = {
+		523A37CB2940AAC600B60D5B /* SquirHell */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 523A37E32940AAC800B60D5B /* Build configuration list for PBXNativeTarget "NC2_4Head" */;
+			buildConfigurationList = 523A37E32940AAC800B60D5B /* Build configuration list for PBXNativeTarget "SquirHell" */;
 			buildPhases = (
 				523A37C82940AAC600B60D5B /* Sources */,
 				523A37C92940AAC600B60D5B /* Frameworks */,
@@ -154,9 +154,9 @@
 			);
 			dependencies = (
 			);
-			name = NC2_4Head;
+			name = SquirHell;
 			productName = NC2_4Head;
-			productReference = 523A37CC2940AAC600B60D5B /* NC2_4Head.app */;
+			productReference = 523A37CC2940AAC600B60D5B /* SquirHell.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -187,7 +187,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				523A37CB2940AAC600B60D5B /* NC2_4Head */,
+				523A37CB2940AAC600B60D5B /* SquirHell */,
 			);
 		};
 /* End PBXProject section */
@@ -430,7 +430,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		523A37E32940AAC800B60D5B /* Build configuration list for PBXNativeTarget "NC2_4Head" */ = {
+		523A37E32940AAC800B60D5B /* Build configuration list for PBXNativeTarget "SquirHell" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				523A37E42940AAC800B60D5B /* Debug */,

@@ -30,16 +30,17 @@ class GameScene: SKScene {
     var squirrelStepFrequency = 0.083
     
     // Play
-    var gameIsStarted = false {
-        didSet {
-            setupObstacles()
-            spawnObstacles()
-        }
-    }
-    var numScore: Double = 0
+    var gameIsStarted = false
+    var numScore = 0.0
     var gameOver = false
     var nutIcon: SKSpriteNode!
     var scoreLabel = SKLabelNode(fontNamed: "Atari ST 8x16 System Font")
+    var nextScoreFinishLine = 100.0
+    var timerObstacleSpawn = 60.0*2.0
+    var timerObstacleSpawnIncrement = 60.0*10 //each 10 sec i will decrease the timerObstacleSpawn until 60.0*0.8 (every 0.8 secs)
+    var tempTimerObstacle = 60.0*2.0
+    var tempTimerObstacleIncrement = 0.0
+    
     
     var pauseNode: SKSpriteNode!
     var containerNode = SKNode()
@@ -65,7 +66,7 @@ class GameScene: SKScene {
             print(maxTime)
         }
     }
-    var minTime = 0.8
+    var minTime = 60 * 0.9
     
     var playableRect: CGRect {
         let ratio: CGFloat = 0.4 // TODO: understand better how it works
@@ -133,6 +134,7 @@ class GameScene: SKScene {
         }
         
     }
+    
     override func update(_ currentTime: TimeInterval) {
         if lastUpdateTime > 0 {
             dt = currentTime - lastUpdateTime
@@ -143,8 +145,32 @@ class GameScene: SKScene {
         lastUpdateTime = currentTime
         moveCamera()
         movePlayer()
+        moveFire()
         updateScore()
-        
+        if gameIsStarted {
+            // to manage obstacle spawn
+            tempTimerObstacleIncrement += 1.0
+            tempTimerObstacle += 1.0
+            // each timerObstacleSpawnIncrement frames, increment the frequency of obstacle spawn
+            if tempTimerObstacleIncrement >= timerObstacleSpawnIncrement {
+                print("10 sec passed")
+                tempTimerObstacleIncrement = 0
+                timerObstacleSpawn -= 60 * 0.8
+                if timerObstacleSpawn <= minTime {
+                    print("increment frequency")
+                    timerObstacleSpawn = minTime
+                    cameraMovePointPerSecond += 200
+                    if cameraMovePointPerSecond > 900{
+                        cameraMovePointPerSecond = 900
+                    }
+                }
+            }
+            if tempTimerObstacle >= timerObstacleSpawn {
+                tempTimerObstacle = 0
+                setupObstacles()
+                print("Obstacle generation")
+            }
+        }
         player.position.x += velocityX
         if player.position.x < frame.width/2 {
             player.xScale = scale
@@ -165,7 +191,6 @@ class GameScene: SKScene {
             }
             
         }
-        print("the position is \(player.position.y) and should be \(playerReference.position.y)")
         // TODO: i've to compare the y coordinate with the y cordinate of an hidden obj locked on the screen
         if player.position.y < playerReference.position.y {
             if gameIsStarted {
@@ -248,6 +273,11 @@ extension GameScene {
         addChild(fire)
     }
     
+    func moveFire(){
+        let amountToMove = cameraMovePointPerSecond * CGFloat(dt)
+        fire.position = CGPoint(x: fire.position.x, y: fire.position.y + amountToMove)
+    }
+    
     func createPlayer() {
         player.name = "Squirrel"
         player.zPosition = 5.0
@@ -313,7 +343,6 @@ extension GameScene {
         player.position = CGPoint(x: player.position.x, y: player.position.y + amountToMove)
         playerReference.position = CGPoint(x: playerReference.position.x, y: playerReference.position.y + amountToMove)
         playerGameOverReference.position = CGPoint(x: playerGameOverReference.position.x, y: playerGameOverReference.position.y + amountToMove)
-        
     }
     
     // Increase the score with time
@@ -395,26 +424,6 @@ extension GameScene {
             .wait(forDuration: 3),
             .removeFromParent()
         ]))
-    }
-    
-    func spawnObstacles() {
-        run(.repeatForever(.sequence([
-            .wait(forDuration: CGFloat.random(in: minTime ... maxTime)),
-            .run{ [weak self] in
-                self?.setupObstacles()
-            }
-        ])))
-        
-        run(.repeatForever(.sequence([
-            .wait(forDuration: 10.0),
-            .run{
-                self.cameraMovePointPerSecond += 100
-                self.maxTime -= 0.5
-                if self.maxTime < self.minTime {
-                    self.maxTime = self.minTime
-                }
-            }
-        ])))
     }
     
     func setupPhysics() {
