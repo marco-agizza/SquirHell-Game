@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		342D1E9C2947454700042838 /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342D1E9B2947454700042838 /* MainMenuScene.swift */; };
+		342D1EA0294B287E00042838 /* ScoreGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342D1E9F294B287E00042838 /* ScoreGenerator.swift */; };
 		523A37D02940AAC600B60D5B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523A37CF2940AAC600B60D5B /* AppDelegate.swift */; };
 		523A37D22940AAC600B60D5B /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 523A37D12940AAC600B60D5B /* GameScene.sks */; };
 		523A37D42940AAC600B60D5B /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 523A37D32940AAC600B60D5B /* Actions.sks */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		342D1E9B2947454700042838 /* MainMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
+		342D1E9F294B287E00042838 /* ScoreGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreGenerator.swift; sourceTree = "<group>"; };
 		523A37CC2940AAC600B60D5B /* SquirHell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SquirHell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		523A37CF2940AAC600B60D5B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		523A37D12940AAC600B60D5B /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				52ED4A8F29448C7D00D06407 /* Types.swift */,
+				342D1E9F294B287E00042838 /* ScoreGenerator.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 			files = (
 				342D1E9C2947454700042838 /* MainMenuScene.swift in Sources */,
 				523A37D62940AAC600B60D5B /* GameScene.swift in Sources */,
+				342D1EA0294B287E00042838 /* ScoreGenerator.swift in Sources */,
 				523A37D82940AAC600B60D5B /* GameViewController.swift in Sources */,
 				523A37D02940AAC600B60D5B /* AppDelegate.swift in Sources */,
 				5253F8A52949274300EC0709 /* SKTAudio.swift in Sources */,
@@ -367,7 +371,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F639597UZK;
+				DEVELOPMENT_TEAM = B2849SAXBK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "NC2-4Head-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -396,7 +400,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F639597UZK;
+				DEVELOPMENT_TEAM = B2849SAXBK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "NC2-4Head-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

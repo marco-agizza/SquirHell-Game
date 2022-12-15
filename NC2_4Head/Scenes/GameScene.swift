@@ -147,6 +147,7 @@ class GameScene: SKScene {
         movePlayer()
         moveFire()
         updateScore()
+        
         if gameIsStarted {
             // to manage obstacle spawn
             tempTimerObstacleIncrement += 1.0
@@ -211,6 +212,10 @@ class GameScene: SKScene {
         }
         
         if gameOver {
+                        goToGameOver()
+                    }
+
+        func goToGameOver() {
             let scene = GameOver(size: size)
             scene.scaleMode = scaleMode
             view!.presentScene(scene, transition: .doorsCloseVertical(withDuration: 0.8))
@@ -345,12 +350,26 @@ extension GameScene {
         playerGameOverReference.position = CGPoint(x: playerGameOverReference.position.x, y: playerGameOverReference.position.y + amountToMove)
     }
     
+    // Translate background score to displayed score
+    func displayedScore(numScore: Double) -> Int {
+        return Int(numScore.rounded()) * 10
+    }
+    
     // Increase the score with time
     func updateScore() {
         let scoreIncrement = 0.01
         
         numScore += scoreIncrement
-        scoreLabel.text = "\(Int(numScore.rounded()) * 10)"
+        scoreLabel.text = "\(displayedScore(numScore: numScore))"
+        
+        let highscore = ScoreGenerator.sharedInstance.getHighscore()
+        let score = displayedScore(numScore: numScore)
+        if score > highscore {
+            ScoreGenerator.sharedInstance.setHighscore(score)
+        } else {
+            ScoreGenerator.sharedInstance.setScore(score)
+        }
+            
     }
     
     func setupObstacles() {
