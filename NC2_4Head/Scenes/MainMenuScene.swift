@@ -43,7 +43,7 @@ class MainMenuScene: SKScene {
         // TODO: font doesn't work
         let gameTitle = SKLabelNode(fontNamed: "Atari ST 8x16 System Font")
         gameTitle.text = "SquirHell"
-        gameTitle.fontSize = 80
+        gameTitle.fontSize = 70
         gameTitle.zPosition = 10.0
         gameTitle.position = CGPoint(x: size.width/2.0, y: size.height - 250)
         addChild(gameTitle)
