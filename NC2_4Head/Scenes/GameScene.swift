@@ -222,8 +222,9 @@ class GameScene: SKScene {
         }
         
         if gameOver {
-                        goToGameOver()
-                    }
+            SKTAudio.sharedInstance().pauseBackgroundMusic()
+            goToGameOver()
+        }
 
         func goToGameOver() {
             let scene = GameOver(size: size)
@@ -523,7 +524,6 @@ extension GameScene: SKPhysicsContactDelegate {
         case PhysicsCategory.Obstacle:
             gameOver = true
             SKTAudio.sharedInstance().playSoundEffect("Hit-Obstacle.m4a")
-            SKTAudio.sharedInstance().pauseBackgroundMusic()
         default: break
         }
     }
