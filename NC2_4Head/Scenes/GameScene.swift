@@ -394,14 +394,14 @@ extension GameScene {
         switch random{
         case 0:
             //sprite1.zRotation = (.pi/2)*3
-            sprite1.position = CGPoint(x: leftTree.frame.width-3 + sprite1.frame.width/2, y: cameraRect.maxY + sprite1.frame.height/2)
+            sprite1.position = CGPoint(x: leftTree.frame.width-10 + sprite1.frame.width/2, y: cameraRect.maxY + sprite1.frame.height/2)
             sprite2.xScale = -scale
-            sprite2.position = CGPoint(x: frame.width+3 - rightTree.frame.width - sprite2.frame.width/2, y: cameraRect.maxY + sprite2.frame.height/2 + distanceBetweenSprites)
+            sprite2.position = CGPoint(x: frame.width+10 - rightTree.frame.width - sprite2.frame.width/2, y: cameraRect.maxY + sprite2.frame.height/2 + distanceBetweenSprites)
         default:
             sprite1.xScale = -scale
-            sprite1.position = CGPoint(x: frame.width+3 - rightTree.frame.width - sprite1.frame.width/2, y: cameraRect.maxY + sprite1.frame.height/2)
+            sprite1.position = CGPoint(x: frame.width+10 - rightTree.frame.width - sprite1.frame.width/2, y: cameraRect.maxY + sprite1.frame.height/2)
             //sprite2.zRotation = (.pi/2)*3
-            sprite2.position = CGPoint(x: leftTree.frame.width-3 + sprite2.frame.width/2, y: cameraRect.maxY + sprite2.frame.height/2 + distanceBetweenSprites)
+            sprite2.position = CGPoint(x: leftTree.frame.width-10 + sprite2.frame.width/2, y: cameraRect.maxY + sprite2.frame.height/2 + distanceBetweenSprites)
         }
         if sprite1.name == "Obstacle" {
             sprite1.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: sprite1.frame.width-65, height: sprite1.frame.height-10))
