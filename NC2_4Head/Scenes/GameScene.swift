@@ -145,6 +145,7 @@ class GameScene: SKScene {
         lastUpdateTime = currentTime
         moveCamera()
         movePlayer()
+        moveBackground()
         moveFire()
         updateScore()
         
@@ -226,14 +227,13 @@ class GameScene: SKScene {
 extension GameScene {
     
     func createBackground() {
-        for i in 0...2 {
-            background = SKSpriteNode(imageNamed: "BackgroundImage")
-            background.name = "Background"
-            background.anchorPoint = .zero
-            background.position = CGPoint(x: 0.0, y: CGFloat(i)*background.frame.height)
-            background.zPosition = -1.0
-            addChild(background)
-        }
+        background = SKSpriteNode(imageNamed: "BackgroundImage")
+        background.setScale(scale)
+        background.name = "Background"
+        background.anchorPoint = .zero
+        background.position = CGPoint(x: 0.0, y: 0.0)
+        background.zPosition = -1.0
+        addChild(background)
     }
     
     func createTrees() {
@@ -324,15 +324,6 @@ extension GameScene {
         let amountToMove = CGPoint(x: 0.0, y: cameraMovePointPerSecond * CGFloat(dt))
         cameraNode.position = CGPoint(x: cameraNode.position.x + amountToMove.x, y: cameraNode.position.y + amountToMove.y)
         
-        //Background
-        enumerateChildNodes(withName: "Background") { (node, _) in
-            let node = node as! SKSpriteNode
-            
-            if node.position.y + node.frame.height < self.cameraRect.origin.y {
-                node.position = CGPoint(x: node.position.x, y: node.position.y + node.frame.height*3)
-            }
-        }
-        
         //Grounds
         enumerateChildNodes(withName: "Tree") { (node, _) in
             let node = node as! SKSpriteNode
@@ -341,6 +332,11 @@ extension GameScene {
                 node.position = CGPoint(x: node.position.x, y: node.position.y + node.frame.height*3)
             }
         }
+    }
+    
+    func moveBackground() {
+        let amountToMove = cameraMovePointPerSecond * CGFloat(dt)
+        background.position = CGPoint(x: background.position.x, y: background.position.y + amountToMove)
     }
     
     func movePlayer() {
@@ -488,14 +484,14 @@ extension GameScene {
         panel.zPosition = 60.0
         panel.position = .zero
         containerNode.addChild(panel)
-        let resume = SKSpriteNode (imageNamed: "GoToMenuButton")
+        let resume = SKSpriteNode (imageNamed: "ResumeButton")
         resume.setScale(scale)
         resume.zPosition = 70.0
         resume.name = "resume"
         resume.setScale (0.4)
         resume.position = CGPoint (x: -panel.frame.width/2.0 + resume.frame.width*1.5, y: 0.0)
         panel.addChild(resume)
-        let quit = SKSpriteNode (imageNamed: "ResumeButton")
+        let quit = SKSpriteNode (imageNamed: "GoToMenuButton")
         quit.setScale(scale)
         quit.zPosition = 70.0
         quit.name = "quit"
