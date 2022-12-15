@@ -43,6 +43,7 @@ class GameOver: SKScene {
         
         // TODO: font doesn't work
         let sceneTitle = SKLabelNode(fontNamed: "Atari ST 8x16 System Font")
+        sceneTitle.fontColor = UIColor.black
         sceneTitle.text = "Game Over"
         sceneTitle.fontSize = 60
         sceneTitle.zPosition = 10.0
@@ -50,6 +51,7 @@ class GameOver: SKScene {
         addChild(sceneTitle)
         
         let scoreTitle = SKLabelNode(fontNamed: "Atari ST 8x16 System Font")
+        scoreTitle.fontColor = UIColor.black
         scoreTitle.text = "Your score: \(ScoreGenerator.sharedInstance.getScore())"
         scoreTitle.fontSize = 40
         scoreTitle.zPosition = 10.0
@@ -58,6 +60,7 @@ class GameOver: SKScene {
         
         if (ScoreGenerator.sharedInstance.getScore()) == (ScoreGenerator.sharedInstance.getHighscore()) {
             let newHighscore = SKLabelNode(fontNamed: "Atari ST 8x16 System Font")
+            newHighscore.fontColor = UIColor.black
             newHighscore.text = "NEW HIGHSCORE!"
             newHighscore.zPosition = 10.0
             newHighscore.position = CGPoint(x: size.width/2.0, y: size.height - 450)
@@ -65,6 +68,7 @@ class GameOver: SKScene {
             
         } else {
             let highScoreIs = SKLabelNode(fontNamed: "Atari ST 8x16 System Font")
+            highScoreIs.fontColor = UIColor.black
             highScoreIs.text = "Highscore: \(ScoreGenerator.sharedInstance.getHighscore())"
             highScoreIs.zPosition = 10.0
             highScoreIs.position = CGPoint(x: size.width/2.0, y: size.height - 450)
