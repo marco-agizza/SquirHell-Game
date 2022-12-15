@@ -25,6 +25,7 @@
 		5285C8D2294B846C00FA55D3 /* Game-Over.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5285C8CD294B846C00FA55D3 /* Game-Over.m4a */; };
 		5285C8D3294B846C00FA55D3 /* Hit-Obstacle.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5285C8CE294B846C00FA55D3 /* Hit-Obstacle.m4a */; };
 		5285C8D4294B846C00FA55D3 /* Block-Hit.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5285C8CF294B846C00FA55D3 /* Block-Hit.m4a */; };
+		5285C8D6294B8F8000FA55D3 /* Main-Theme.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5285C8D5294B8F8000FA55D3 /* Main-Theme.mp3 */; };
 		52DDFCF8294644E100980043 /* AtariST8x16SystemFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52DDFCF72946445B00980043 /* AtariST8x16SystemFont.ttf */; };
 		52ED4A9029448C7D00D06407 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ED4A8F29448C7D00D06407 /* Types.swift */; };
 /* End PBXBuildFile section */
@@ -49,6 +50,7 @@
 		5285C8CD294B846C00FA55D3 /* Game-Over.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Game-Over.m4a"; sourceTree = "<group>"; };
 		5285C8CE294B846C00FA55D3 /* Hit-Obstacle.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hit-Obstacle.m4a"; sourceTree = "<group>"; };
 		5285C8CF294B846C00FA55D3 /* Block-Hit.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Block-Hit.m4a"; sourceTree = "<group>"; };
+		5285C8D5294B8F8000FA55D3 /* Main-Theme.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Main-Theme.mp3"; sourceTree = "<group>"; };
 		52DDFCF72946445B00980043 /* AtariST8x16SystemFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AtariST8x16SystemFont.ttf; sourceTree = "<group>"; };
 		52DDFCF92946453900980043 /* NC2-4Head-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "NC2-4Head-Info.plist"; sourceTree = SOURCE_ROOT; };
 		52ED4A8F29448C7D00D06407 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 		526BDC1E294903B200CF9589 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				5285C8D5294B8F8000FA55D3 /* Main-Theme.mp3 */,
 				5285C8CF294B846C00FA55D3 /* Block-Hit.m4a */,
 				5285C8CC294B846C00FA55D3 /* Button-Press.m4a */,
 				5285C8CD294B846C00FA55D3 /* Game-Over.m4a */,
@@ -218,6 +221,7 @@
 				5285C8D1294B846C00FA55D3 /* Button-Press.m4a in Resources */,
 				5285C8D3294B846C00FA55D3 /* Hit-Obstacle.m4a in Resources */,
 				523A37DB2940AAC600B60D5B /* Main.storyboard in Resources */,
+				5285C8D6294B8F8000FA55D3 /* Main-Theme.mp3 in Resources */,
 				526BDC1D2949038D00CF9589 /* MenuSong.mp3 in Resources */,
 				523A37D22940AAC600B60D5B /* GameScene.sks in Resources */,
 				5285C8D2294B846C00FA55D3 /* Game-Over.m4a in Resources */,
@@ -391,7 +395,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B2849SAXBK;
+				DEVELOPMENT_TEAM = F639597UZK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "NC2-4Head-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -405,7 +409,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "learning.NC2-4Head";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.learning.NC2-4Head";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -420,7 +424,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B2849SAXBK;
+				DEVELOPMENT_TEAM = F639597UZK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "NC2-4Head-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -434,7 +438,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "learning.NC2-4Head";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.learning.NC2-4Head";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

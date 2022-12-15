@@ -94,6 +94,7 @@ class GameScene: SKScene {
     // MARK: System
     
     override func didMove(to view: SKView) {
+        SKTAudio.sharedInstance().playBackgroundMusic("Main-Theme.mp3")
         createBackground()
         createTrees()
         createFire()
@@ -522,6 +523,7 @@ extension GameScene: SKPhysicsContactDelegate {
         case PhysicsCategory.Obstacle:
             gameOver = true
             SKTAudio.sharedInstance().playSoundEffect("Hit-Obstacle.m4a")
+            SKTAudio.sharedInstance().pauseBackgroundMusic()
         default: break
         }
     }

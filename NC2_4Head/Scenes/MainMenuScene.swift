@@ -59,10 +59,10 @@ class MainMenuScene: SKScene {
         playButton.position = CGPoint(x: size.width/2.0, y: size.height/2.0 - 65)
         addChild(playButton)
         
-        let higscoreButton = SKSpriteNode(imageNamed: "button_blue_flat")
+        let higscoreButton = SKSpriteNode(imageNamed: "ScoreButton")
         higscoreButton.name = "highscore"
+        higscoreButton.setScale(scale)
         // TODO: remove scale for our own assets
-        higscoreButton.setScale(0.65)
         higscoreButton.zPosition = 10.0
         higscoreButton.position = CGPoint(x: size.width/2.0, y: size.height/2.0 + 65)
         addChild(higscoreButton)
