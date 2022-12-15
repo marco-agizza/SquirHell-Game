@@ -18,6 +18,10 @@ class GameOver: SKScene {
         createBackground()
         createTrees()
         setupNodes()
+        run(SKAction.sequence([
+            SKAction.wait(forDuration: 0.13),
+            SKAction.run { SKTAudio.sharedInstance().playSoundEffect("Game-Over.m4a") }]))
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -29,12 +29,14 @@ class MainMenuScene: SKScene {
         let node = atPoint(touch.location(in: self))
         
         if node.name == "play" {
+            SKTAudio.sharedInstance().playSoundEffect("Button-Press.m4a")
             SKTAudio.sharedInstance().pauseBackgroundMusic()
             let scene = GameScene(size: CGSize(width: frame.width, height: frame.height))
             scene.scaleMode = scaleMode
             view!.presentScene(scene, transition: .doorsOpenVertical(withDuration: 0.3))
             
         } else if node.name == "highscore" {
+            SKTAudio.sharedInstance().playSoundEffect("Button-Press.m4a")
             print("highscore tab")
         }
     }
@@ -42,16 +44,17 @@ class MainMenuScene: SKScene {
     func setupNodes() {
         // TODO: font doesn't work
         let gameTitle = SKLabelNode(fontNamed: "Atari ST 8x16 System Font")
+        gameTitle.fontColor = UIColor.black
         gameTitle.text = "SquirHell"
         gameTitle.fontSize = 70
         gameTitle.zPosition = 10.0
         gameTitle.position = CGPoint(x: size.width/2.0, y: size.height - 250)
         addChild(gameTitle)
         
-        let playButton = SKSpriteNode(imageNamed: "button_green_thick")
+        let playButton = SKSpriteNode(imageNamed: "PlayButton")
         playButton.name = "play"
         // TODO: remove scale for our own assets
-        playButton.setScale(0.65)
+        playButton.setScale(scale)
         playButton.zPosition = 10.0
         playButton.position = CGPoint(x: size.width/2.0, y: size.height/2.0 - 65)
         addChild(playButton)
