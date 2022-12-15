@@ -66,7 +66,7 @@ class GameScene: SKScene {
             print(maxTime)
         }
     }
-    var minTime = 60 * 0.9
+    var minTime = 60 * 0.6
     
     var playableRect: CGRect {
         let ratio: CGFloat = 0.4 // TODO: understand better how it works
@@ -368,50 +368,45 @@ extension GameScene {
         let index2 = Int(arc4random_uniform(UInt32(obstaclesAndBlocks.count-1)))
         let sprite1 = obstaclesAndBlocks[index1].copy() as! SKSpriteNode
         let sprite2 = obstaclesAndBlocks[index2].copy() as! SKSpriteNode
-        if sprite1.name == "Obstacle"{
-            sprite1.setScale(scale)
-        }else{
-            sprite1.setScale(0.2)
-        }
-        if sprite2.name == "Obstacle"{
-            sprite2.setScale(scale)
-        }else{
-            sprite2.setScale(0.2)
-        }
-        sprite1.zPosition = 5.0
+        sprite1.setScale(scale)
+        sprite2.setScale(scale)
+        sprite1.zPosition = 6.0
         sprite1.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         let random = Int.random(in: 0...1)
-        sprite2.zPosition = 5.0
+        sprite2.zPosition = 6.0
         sprite2.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         let distanceBetweenSprites = Double.random(in: 150...300)
         switch random{
         case 0:
-            sprite1.zRotation = (.pi/2)*3
-            sprite1.position = CGPoint(x: leftTree.frame.width + sprite1.frame.width/2, y: cameraRect.maxY + sprite1.frame.height/2)
-            sprite2.zRotation = .pi/2
-            sprite2.position = CGPoint(x: frame.width - rightTree.frame.width - sprite2.frame.width/2, y: cameraRect.maxY + sprite2.frame.height/2 + distanceBetweenSprites)
+            //sprite1.zRotation = (.pi/2)*3
+            sprite1.position = CGPoint(x: leftTree.frame.width-3 + sprite1.frame.width/2, y: cameraRect.maxY + sprite1.frame.height/2)
+            sprite2.xScale = -scale
+            sprite2.position = CGPoint(x: frame.width+3 - rightTree.frame.width - sprite2.frame.width/2, y: cameraRect.maxY + sprite2.frame.height/2 + distanceBetweenSprites)
         default:
-            sprite1.zRotation = .pi/2
-            sprite1.position = CGPoint(x: frame.width - rightTree.frame.width - sprite1.frame.width/2, y: cameraRect.maxY + sprite1.frame.height/2)
-            sprite2.zRotation = (.pi/2)*3
-            sprite2.position = CGPoint(x: leftTree.frame.width + sprite2.frame.width/2, y: cameraRect.maxY + sprite2.frame.height/2 + distanceBetweenSprites)
+            sprite1.xScale = -scale
+            sprite1.position = CGPoint(x: frame.width+3 - rightTree.frame.width - sprite1.frame.width/2, y: cameraRect.maxY + sprite1.frame.height/2)
+            //sprite2.zRotation = (.pi/2)*3
+            sprite2.position = CGPoint(x: leftTree.frame.width-3 + sprite2.frame.width/2, y: cameraRect.maxY + sprite2.frame.height/2 + distanceBetweenSprites)
         }
-        sprite1.physicsBody = SKPhysicsBody(rectangleOf: sprite1.size)
-        sprite1.physicsBody!.affectedByGravity = false
-        sprite1.physicsBody!.isDynamic = false
         if sprite1.name == "Obstacle" {
+            sprite1.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: sprite1.frame.width-65, height: sprite1.frame.height-10))
             sprite1.physicsBody!.categoryBitMask = PhysicsCategory.Obstacle
         } else {
+            sprite1.physicsBody = SKPhysicsBody(rectangleOf: sprite1.size)
             sprite1.physicsBody!.categoryBitMask = PhysicsCategory.Block
         }
-        sprite2.physicsBody = SKPhysicsBody(rectangleOf: sprite1.size)
-        sprite2.physicsBody!.affectedByGravity = false
-        sprite2.physicsBody!.isDynamic = false
         if sprite2.name == "Obstacle" {
+            sprite2.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: sprite2.frame.width-65, height: sprite2.frame.height-10))
             sprite2.physicsBody!.categoryBitMask = PhysicsCategory.Obstacle
         } else {
+            sprite2.physicsBody = SKPhysicsBody(rectangleOf: sprite2.size)
             sprite2.physicsBody!.categoryBitMask = PhysicsCategory.Block
         }
+        sprite1.physicsBody!.affectedByGravity = false
+        sprite1.physicsBody!.isDynamic = false
+        sprite2.physicsBody!.affectedByGravity = false
+        sprite2.physicsBody!.isDynamic = false
+        
         sprite1.physicsBody!.contactTestBitMask = PhysicsCategory.Player
         sprite2.physicsBody!.contactTestBitMask = PhysicsCategory.Player
         addChild(sprite1)
