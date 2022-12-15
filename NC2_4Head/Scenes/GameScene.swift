@@ -454,8 +454,8 @@ extension GameScene {
     }
     
     func setupPause () {
-        pauseNode = SKSpriteNode (imageNamed: "pause")
-        pauseNode.setScale (0.25)
+        pauseNode = SKSpriteNode (imageNamed: "PauseButton")
+        pauseNode.setScale (scale)
         pauseNode.zPosition = 50.0
         pauseNode.name = "pause"
         pauseNode.position = CGPoint(x: playableRect.width/2.0 - pauseNode.frame.width/2.0 - 30.0,
@@ -469,13 +469,15 @@ extension GameScene {
         panel.zPosition = 60.0
         panel.position = .zero
         containerNode.addChild(panel)
-        let resume = SKSpriteNode (imageNamed: "resume")
+        let resume = SKSpriteNode (imageNamed: "GoToMenuButton")
+        resume.setScale(scale)
         resume.zPosition = 70.0
         resume.name = "resume"
         resume.setScale (0.4)
         resume.position = CGPoint (x: -panel.frame.width/2.0 + resume.frame.width*1.5, y: 0.0)
         panel.addChild(resume)
-        let quit = SKSpriteNode (imageNamed: "back")
+        let quit = SKSpriteNode (imageNamed: "ResumeButton")
+        quit.setScale(scale)
         quit.zPosition = 70.0
         quit.name = "quit"
         quit.setScale(0.4)
