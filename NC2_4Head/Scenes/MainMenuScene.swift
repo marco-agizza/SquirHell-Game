@@ -74,14 +74,13 @@ class MainMenuScene: SKScene {
 extension MainMenuScene {
     
     func createBackground() {
-        for i in 0...2 {
-            background = SKSpriteNode(imageNamed: "BackgroundImage")
-            background.name = "Background"
-            background.anchorPoint = .zero
-            background.position = CGPoint(x: 0.0, y: CGFloat(i)*background.frame.height)
-            background.zPosition = -1.0
-            addChild(background)
-        }
+        background = SKSpriteNode(imageNamed: "BackgroundImage")
+        background.name = "Background"
+        background.setScale(scale)
+        background.anchorPoint = .zero
+        background.position = CGPoint(x: 0.0, y: 0.0)
+        background.zPosition = -1.0
+        addChild(background)
     }
     
     func createTrees() {
