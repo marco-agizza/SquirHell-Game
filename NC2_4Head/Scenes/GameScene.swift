@@ -147,6 +147,7 @@ class GameScene: SKScene {
         movePlayer()
         moveFire()
         updateScore()
+        
         if gameIsStarted {
             // to manage obstacle spawn
             tempTimerObstacleIncrement += 1.0
@@ -211,22 +212,14 @@ class GameScene: SKScene {
         }
         
         if gameOver {
-                    let highscore = ScoreGenerator.sharedInstance.getHighscore()
-                    let score = displayedScore(numScore: numScore)
-                    if score > highscore {
-                        ScoreGenerator.sharedInstance.setHighscore(score)
-                        goToGameOver()
-                    } else {
-                        ScoreGenerator.sharedInstance.setScore(score)
                         goToGameOver()
                     }
-                }
 
-            func goToGameOver() {
-                let scene = GameOver(size: size)
-                scene.scaleMode = scaleMode
-                view!.presentScene(scene, transition: .doorsCloseVertical(withDuration: 0.8))
-            }
+        func goToGameOver() {
+            let scene = GameOver(size: size)
+            scene.scaleMode = scaleMode
+            view!.presentScene(scene, transition: .doorsCloseVertical(withDuration: 0.8))
+        }
     }
 }
 
@@ -368,6 +361,15 @@ extension GameScene {
         
         numScore += scoreIncrement
         scoreLabel.text = "\(displayedScore(numScore: numScore))"
+        
+        let highscore = ScoreGenerator.sharedInstance.getHighscore()
+        let score = displayedScore(numScore: numScore)
+        if score > highscore {
+            ScoreGenerator.sharedInstance.setHighscore(score)
+        } else {
+            ScoreGenerator.sharedInstance.setScore(score)
+        }
+            
     }
     
     func setupObstacles() {

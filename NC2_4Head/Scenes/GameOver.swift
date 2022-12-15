@@ -45,23 +45,36 @@ class GameOver: SKScene {
         addChild(sceneTitle)
         
         let scoreTitle = SKLabelNode(fontNamed: "Atari ST 8x16 System Font")
-        scoreTitle.text = """
-                        Your score:
-                        \(ScoreGenerator.sharedInstance.getScore())
-                        """
+        scoreTitle.text = "Your score: \(ScoreGenerator.sharedInstance.getScore())"
         scoreTitle.fontSize = 40
         scoreTitle.zPosition = 10.0
         scoreTitle.position = CGPoint(x: size.width/2.0, y: size.height - 350)
         addChild(scoreTitle)
+        
+        if (ScoreGenerator.sharedInstance.getScore()) == (ScoreGenerator.sharedInstance.getHighscore()) {
+            let newHighscore = SKLabelNode(fontNamed: "Atari ST 8x16 System Font")
+            newHighscore.text = "NEW HIGHSCORE!"
+            newHighscore.zPosition = 10.0
+            newHighscore.position = CGPoint(x: size.width/2.0, y: size.height - 450)
+            addChild(newHighscore)
+            
+        } else {
+            let highScoreIs = SKLabelNode(fontNamed: "Atari ST 8x16 System Font")
+            highScoreIs.text = "Highscore: \(ScoreGenerator.sharedInstance.getHighscore())"
+            highScoreIs.zPosition = 10.0
+            highScoreIs.position = CGPoint(x: size.width/2.0, y: size.height - 450)
+            addChild(highScoreIs)
+        }
         
         let playButton = SKSpriteNode(imageNamed: "button_green_thick")
         playButton.name = "play"
         // TODO: remove scale for our own assets
         playButton.setScale(0.65)
         playButton.zPosition = 10.0
-        playButton.position = CGPoint(x: size.width/2.0, y: size.height/2.0 - 65)
+        playButton.position = CGPoint(x: size.width/2.0, y: size.height/2.0 - 150)
         addChild(playButton)
     }
+    
     
 //    func scoreInteraction() {
 //        let highscore = ScoreGenerator.sharedInstance.getHighscore()
