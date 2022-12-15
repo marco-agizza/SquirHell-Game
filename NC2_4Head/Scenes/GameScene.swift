@@ -111,18 +111,26 @@ class GameScene: SKScene {
         guard let touch = touches.first else { return }
         let node = atPoint(touch.location (in: self))
         if node.name == "pause" {
+            if !isPaused {
+                SKTAudio.sharedInstance().playSoundEffect("Button-Press.m4a")
+            }
             if isPaused { return }
             createPanel()
             lastUpdateTime = 0.0
             dt = 0.0
             isPaused = true
         } else if node.name == "resume" {
+            SKTAudio.sharedInstance().playSoundEffect("Button-Press.m4a")
             containerNode.removeFromParent()
             isPaused = false
         } else if node.name == "quit" {
-            //presentScene(MainMenu(size: size))
+            SKTAudio.sharedInstance().playSoundEffect("Button-Press.m4a")
+            let scene = MainMenuScene(size: CGSize(width: frame.width, height: frame.height))
+            scene.scaleMode = scaleMode
+            view!.presentScene(scene, transition: .doorsOpenVertical(withDuration: 0.3))
         } else {
             if !isPaused {
+                SKTAudio.sharedInstance().playSoundEffect("Jump-Sound.m4a")
                 onLeftTree.toggle()
                 onTree.toggle()
                 if !onLeftTree {
@@ -356,7 +364,8 @@ extension GameScene {
         let scoreIncrement = 0.01
         
         numScore += scoreIncrement
-        scoreLabel.text = "\(displayedScore(numScore: numScore))"
+        scoreLabel.text = "\(displayedScore(numScore: numScore))m"
+        scoreLabel.fontColor = UIColor.black
         
         let highscore = ScoreGenerator.sharedInstance.getHighscore()
         let score = displayedScore(numScore: numScore)
@@ -445,13 +454,14 @@ extension GameScene {
         nutIcon = SKSpriteNode(imageNamed: "Nut-0")
         
         // Score label
-        scoreLabel.text = "\(numScore)"
+        scoreLabel.text = "\(numScore)m"
         scoreLabel.fontSize = 60
         scoreLabel.horizontalAlignmentMode = .left
         scoreLabel.verticalAlignmentMode = .top
         scoreLabel.zPosition = 50.0
         
         setupScorePos(nutIcon, i: 2.0, j: 4.0)
+        nutIcon.zPosition = -50
         scoreLabel.position = CGPoint(x:  nutIcon.position.x + nutIcon.frame.width,
                                       y: nutIcon.position.y + nutIcon.frame.height-8.0)
         cameraNode.addChild(scoreLabel)
@@ -508,10 +518,10 @@ extension GameScene: SKPhysicsContactDelegate {
         let other = contact.bodyA.categoryBitMask == PhysicsCategory.Player ? contact.bodyB : contact.bodyA
         switch other.categoryBitMask {
         case PhysicsCategory.Block:
-            print("Block")
+            SKTAudio.sharedInstance().playSoundEffect("Block-Hit.m4a")
         case PhysicsCategory.Obstacle:
             gameOver = true
-            print("Game Over")
+            SKTAudio.sharedInstance().playSoundEffect("Hit-Obstacle.m4a")
         default: break
         }
     }
