@@ -86,6 +86,7 @@ extension MainMenuScene {
     func createTrees() {
         for i in 0...2 {
             leftTree = SKSpriteNode(imageNamed: "LeftTree")
+            leftTree.setScale(scale)
             leftTree.name = "Tree"
             leftTree.anchorPoint = .zero
             leftTree.zPosition = 1.0
@@ -95,8 +96,10 @@ extension MainMenuScene {
             leftTree.physicsBody!.affectedByGravity = false
             leftTree.physicsBody!.categoryBitMask = PhysicsCategory.Tree
             rightTree = SKSpriteNode(imageNamed: "LeftTree")
+            rightTree.setScale(scale)
+            rightTree.xScale = -scale
             rightTree.name = "Tree"
-            rightTree.anchorPoint = CGPoint(x: 1, y:  0)
+            rightTree.anchorPoint = .zero
             rightTree.zPosition = 1.0
             rightTree.position = CGPoint(x: frame.width, y: CGFloat(i)*rightTree.frame.height)
             rightTree.physicsBody = SKPhysicsBody(rectangleOf: rightTree.size)
